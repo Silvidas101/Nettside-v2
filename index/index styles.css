@@ -1,0 +1,24 @@
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #2d1b4e, #389696);
+}
+
+.center-button {
+    padding: 20px 40px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #7c3aed;
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.center-button:hover {
+    background-color: #3d8592;
+}
