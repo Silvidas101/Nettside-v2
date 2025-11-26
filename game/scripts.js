@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var grid = 16;
   var count = 0;
+  var running = false;
+  var speed = 4; // default speed (frames per move)
 
   var snake = {
     x: 160,
@@ -33,33 +35,54 @@ document.addEventListener('DOMContentLoaded', function () {
     y: 320
   };
 
+  // Reset game state to starting values
+  function resetGame() {
+    snake.x = 160;
+    snake.y = 160;
+    snake.cells = [];
+    snake.maxCells = 4;
+    snake.dx = grid;
+    snake.dy = 0;
+
+    apple.x = getRandomInt(0, 25) * grid;
+    apple.y = getRandomInt(0, 25) * grid;
+    running = false;
+    showOverlay();
+  }
+
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+  function showOverlay() {
+    document.getElementById('startOverlay').style.display = 'flex';
+  }
+  function hideOverlay() {
+    document.getElementById('startOverlay').style.display = 'none';
+  }
+
   function loop() {
+    if (!running) return;
     requestAnimationFrame(loop);
 
-    if (++count < 4) {
+    if (++count < speed) {
       return;
     }
     count = 0;
 
     context.clearRect(0, 0, canvas.width, canvas.height);
+    // Draw white border inside the canvas for extra clarity
+    context.strokeStyle = 'white';
+    context.lineWidth = 4;
+    context.strokeRect(0, 0, canvas.width, canvas.height);
 
     snake.x += snake.dx;
     snake.y += snake.dy;
 
-    if (snake.x < 0) {
-      snake.x = canvas.width - grid;
-    } else if (snake.x >= canvas.width) {
-      snake.x = 0;
-    }
-
-    if (snake.y < 0) {
-      snake.y = canvas.height - grid;
-    } else if (snake.y >= canvas.height) {
-      snake.y = 0;
+    // If the snake hits any edge, reset the game and show overlay
+    if (snake.x < 0 || snake.x >= canvas.width || snake.y < 0 || snake.y >= canvas.height) {
+      resetGame();
+      return;
     }
 
     snake.cells.unshift({ x: snake.x, y: snake.y });
@@ -82,21 +105,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
       for (var i = index + 1; i < snake.cells.length; i++) {
         if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-          snake.x = 160;
-          snake.y = 160;
-          snake.cells = [];
-          snake.maxCells = 4;
-          snake.dx = grid;
-          snake.dy = 0;
-
-          apple.x = getRandomInt(0, 25) * grid;
-          apple.y = getRandomInt(0, 25) * grid;
+          resetGame();
+          return;
         }
       }
     });
   }
 
-  // Helper: change direction by name so both keyboard and buttons use it
+  //  change direction by name so both keyboard and buttons use it
   function changeDirection(dir) {
     if (dir === 'left' && snake.dx === 0) {
       snake.dx = -grid; snake.dy = 0;
@@ -111,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Keyboard controls: arrow keys + WASD
   document.addEventListener('keydown', function (e) {
+    if (!running) return;
     var key = e.key; // modern string key
     if (key === 'ArrowLeft' || key === 'a' || key === 'A') {
       changeDirection('left');
@@ -131,16 +148,62 @@ document.addEventListener('DOMContentLoaded', function () {
   var controlButtons = document.querySelectorAll('.control-button');
   controlButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
+      if (!running) return;
       var dir = btn.dataset.dir;
       changeDirection(dir);
     });
     // support touchstart for better mobile responsiveness
     btn.addEventListener('touchstart', function (ev) {
+      if (!running) return;
       ev.preventDefault();
       var dir = btn.dataset.dir;
       changeDirection(dir);
     }, { passive: false });
   });
 
-  requestAnimationFrame(loop);
+  // Speed selection logic
+  var speedButtons = document.querySelectorAll('.speed-button');
+  var speedMap = { slug: 10, worm: 6, python: 4, cobra: 2 };
+  var selectedSpeed = 'worm';
+  // handle clicks on speed buttons
+  speedButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      speedButtons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedSpeed = btn.dataset.speed;
+      speed = speedMap[selectedSpeed];
+      // if user chooses a normal speed, ensure cobra is not highlighted
+      var cobraBtn = document.getElementById('cobraButton');
+      if (cobraBtn) cobraBtn.classList.remove('selected');
+    });
+  });
+  // Set default selected
+  speedButtons.forEach(function (btn) {
+    if (btn.dataset.speed === selectedSpeed) btn.classList.add('selected');
+  });
+
+  // Cobra secret button (global, top-right of viewport)
+  var cobraBtn = document.getElementById('cobraButton');
+  if (cobraBtn) {
+    cobraBtn.addEventListener('click', function () {
+      // unselect other speed buttons
+      speedButtons.forEach(b => b.classList.remove('selected'));
+      // select cobra visually
+      cobraBtn.classList.add('selected');
+      selectedSpeed = 'cobra';
+      speed = speedMap['cobra'];
+    });
+  }
+
+  // Start button logic
+  var startButton = document.getElementById('startButton');
+  startButton.addEventListener('click', function () {
+    hideOverlay();
+    running = true;
+    count = 0;
+    requestAnimationFrame(loop);
+  });
+
+  // Show overlay on load
+  showOverlay();
 });

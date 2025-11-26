@@ -1,3 +1,77 @@
+.cobra-secret {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 20;
+    background: none;
+    color: #ff2222;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 6px 16px;
+    border: 2px solid #ff2222;
+    border-radius: 8px;
+    opacity: 0.7;
+    transition: opacity 0.2s, background 0.2s;
+}
+.cobra-secret:hover, .cobra-secret.selected {
+    opacity: 1;
+    background: #ff2222;
+    color: #fff;
+}
+.speed-select {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.speed-button {
+    padding: 16px 28px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #222;
+    color: #fff;
+    border: 2px solid #7c3aed;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.speed-button.selected {
+    background-color: #4FB085;
+    color: #fff;
+}
+.speed-button:active {
+    background-color: #B04F7A;
+}
+.start-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(30, 20, 50, 0.7);
+    z-index: 10;
+}
+.start-button {
+    padding: 24px 48px;
+    font-size: 28px;
+    font-weight: bold;
+    background-color: #4FB085;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.start-button:active {
+    background-color: #B04F7A;
+}
+.game-container {
+    position: relative;
+}
 
 body {
     margin: 0;
@@ -5,7 +79,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #389696, #2d1b4e);
+    background: linear-gradient(135deg, #4AB57B, #7B4AB5, #B57B4A);
 }
 
 .game-container {
@@ -32,7 +106,7 @@ body {
 .game-container button {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #7c3aed;
+    background-color: #4FB085;
     color: white;
     border: none;
     border-radius: 8px;
@@ -40,7 +114,7 @@ body {
 }
 
 .game-container button:hover {
-    background-color: #6d28d9;
+    background-color: #B04F7A;
 }
 
 /* Controls (touch / on-screen) */
@@ -67,4 +141,9 @@ body {
 }
 .control-button:active {
     transform: scale(0.97);
+}
+/* Make the game canvas border white and visible */
+canvas#game {
+    border: 4px solid white;
+    box-sizing: border-box;
 }

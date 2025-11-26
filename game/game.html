@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="game-container">
-        <h1>🎮 My Game</h1>
-        <p>Your game goes here!</p>
+        <h1>🎮 The Long Animal Game</h1>
+        <p>Pick between 3 animals which have 3 various speeds</p>
                 <!-- canvas where the game draws -->
                 <canvas id="game" width="400" height="400"></canvas>
                 <!-- simple on-screen controls for touch devices -->
@@ -24,6 +24,16 @@
                     <div class="controls-row">
                         <button class="control-button" data-dir="down">↓</button>
                     </div>
+                </div>
+                <!-- Start/Restart overlay button -->
+                <div id="cobraButton" class="cobra-secret">Cobra</div>
+                <div id="startOverlay" class="start-overlay">
+                    <div class="speed-select">
+                        <button class="speed-button" data-speed="slug">Slug</button>
+                        <button class="speed-button" data-speed="worm">Worm</button>
+                        <button class="speed-button" data-speed="python">Python</button>
+                    </div>
+                    <button id="startButton" class="start-button">Start Game</button>
                 </div>
                 <div style="margin-top:16px;">
                     <button onclick="window.location.href='../index/index.html'">Back to Menu</button>
