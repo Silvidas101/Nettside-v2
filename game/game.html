@@ -10,7 +10,24 @@
     <div class="game-container">
         <h1>🎮 My Game</h1>
         <p>Your game goes here!</p>
-        <button onclick="window.location.href='../index/index.html'">Back to Menu</button>
+                <!-- canvas where the game draws -->
+                <canvas id="game" width="400" height="400"></canvas>
+                <!-- simple on-screen controls for touch devices -->
+                <div class="controls" aria-hidden="false">
+                    <div class="controls-row">
+                        <button class="control-button" data-dir="up">↑</button>
+                    </div>
+                    <div class="controls-row">
+                        <button class="control-button" data-dir="left">←</button>
+                        <button class="control-button" data-dir="right">→</button>
+                    </div>
+                    <div class="controls-row">
+                        <button class="control-button" data-dir="down">↓</button>
+                    </div>
+                </div>
+                <div style="margin-top:16px;">
+                    <button onclick="window.location.href='../index/index.html'">Back to Menu</button>
+                </div>
     </div>
     <script src="scripts.js"></script>
 </body>

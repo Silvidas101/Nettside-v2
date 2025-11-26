@@ -42,3 +42,29 @@ body {
 .game-container button:hover {
     background-color: #6d28d9;
 }
+
+/* Controls (touch / on-screen) */
+.controls {
+    margin-top: 12px;
+    display: inline-block;
+}
+.controls-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 4px 0;
+}
+.control-button {
+    width: 64px;
+    height: 48px;
+    font-size: 20px;
+    border-radius: 8px;
+    border: none;
+    background: #7c3aed;
+    color: white;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.control-button:active {
+    transform: scale(0.97);
+}
