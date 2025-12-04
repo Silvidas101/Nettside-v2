@@ -79,7 +79,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #4AB57B, #7B4AB5, #B57B4A);
+    background: linear-gradient(135deg, #a9edc8, #bdf787, #84ef3d);
 }
 
 .game-container {
