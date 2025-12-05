@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Speed selection logic
   var speedButtons = document.querySelectorAll('.speed-button');
-  var speedMap = { slug: 10, worm: 6, python: 4, cobra: 2 };
+  var speedMap = { slug: 10, worm: 8, python: 6, cobra: 4 };
   var selectedSpeed = 'worm';
   // handle clicks on speed buttons
   speedButtons.forEach(function (btn) {
